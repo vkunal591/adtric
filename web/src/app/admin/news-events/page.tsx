@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AdminSidebar from "../AdminSidebar";
+import { adminFetch } from "@/lib/admin-auth";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
@@ -57,9 +58,8 @@ export default function NewsEventsPage() {
   const loadItems = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(
+      const response = await adminFetch(
         `${apiUrl}/api/admin/news?page=1&limit=100`,
-        { credentials: "include" },
       );
       if (response.status === 401 || response.status === 403) {
         router.replace("/admin/login");
@@ -138,13 +138,9 @@ export default function NewsEventsPage() {
       payload.append("published", form.published);
       if (form.image) payload.append("image", form.image);
 
-      const response = await fetch(
+      const response = await adminFetch(
         `${apiUrl}/api/admin/news${editingId ? `/${editingId}` : ""}`,
-        {
-          method: editingId ? "PATCH" : "POST",
-          credentials: "include",
-          body: payload,
-        },
+        { method: editingId ? "PATCH" : "POST", body: payload },
       );
       if (response.status === 401 || response.status === 403) {
         router.replace("/admin/login");
@@ -179,9 +175,8 @@ export default function NewsEventsPage() {
 
   const deleteItem = async (id: string) => {
     if (!window.confirm("Delete this news or event?")) return;
-    const response = await fetch(`${apiUrl}/api/admin/news/${id}`, {
+    const response = await adminFetch(`${apiUrl}/api/admin/news/${id}`, {
       method: "DELETE",
-      credentials: "include",
     });
     if (response.status === 401 || response.status === 403) {
       router.replace("/admin/login");

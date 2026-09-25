@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AdminSidebar from "./AdminSidebar";
+import { adminFetch } from "@/lib/admin-auth";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
@@ -19,7 +20,7 @@ export default function AdminDashboardPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(`${apiUrl}/api/admin/dashboard`, { credentials: "include" })
+    adminFetch(`${apiUrl}/api/admin/dashboard`)
       .then(async (response) => {
         if (response.status === 401 || response.status === 403) {
           router.replace("/admin/login");

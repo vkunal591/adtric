@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { adminFetch, clearAdminToken } from "@/lib/admin-auth";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
@@ -10,10 +11,11 @@ export default function AdminSidebar() {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await fetch(`${apiUrl}/api/auth/logout`, {
+    await adminFetch(`${apiUrl}/api/auth/logout`, {
       method: "POST",
       credentials: "include"
     });
+    clearAdminToken();
     router.replace("/admin/login");
   };
 

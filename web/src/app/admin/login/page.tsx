@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { saveAdminToken } from "@/lib/admin-auth";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
@@ -31,6 +32,7 @@ export default function AdminLoginPage() {
         throw new Error(result.message || "Unable to sign in.");
       }
 
+      saveAdminToken(result.token);
       router.replace("/admin");
     } catch (loginError) {
       setError(loginError instanceof Error ? loginError.message : "Unable to sign in.");

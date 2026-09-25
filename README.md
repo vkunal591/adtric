@@ -239,7 +239,7 @@ Make sure MongoDB is running locally or provide a remote MongoDB connection stri
 ```powershell
 cd "d:\Development\job\TASK_ Full Stack Developer\api"
 npm install
-npm run seed:admin
+npm run seed
 npm run dev
 ```
 
@@ -280,6 +280,12 @@ ADMIN_PASSWORD=ChangeThisPassword123!
 
 The supplied Webhook.site URL is configured in the local `api/.env` file.
 
+The full seed command creates or updates:
+
+- 1 admin account
+- 3 News & Events records
+- 3 enquiry records with CRM results
+
 ## Verification
 
 Verified during implementation:
@@ -296,3 +302,17 @@ Verified during implementation:
 - Admin seed script creates the admin account successfully
 
 The only remaining build message is a non-blocking Next.js warning that `middleware.ts` will eventually be renamed to `proxy.ts`.
+
+
+Your unique URL: https://webhook.site/62936104-7c53-4d52-a19c-30946126d32d      
+
+Your unique email address : 62936104-7c53-4d52-a19c-30946126d32d@emailhook.site 
+
+Your unique DNS name : 62936104-7c53-4d52-a19c-30946126d32d@emailhook.site
+
+Tunnel using Webhook.site CLI : whcli forward --token=62936104-7c53-4d52-a19c-30946126d32d --target=https://localhost
+
+
+
+For View All the Webhook Request:
+https://webhook.site/#!/view/62936104-7c53-4d52-a19c-30946126d32d/ffa123d2-d23b-410e-9a27-f8ac7bc59691/1

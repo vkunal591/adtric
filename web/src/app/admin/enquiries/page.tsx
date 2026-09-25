@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AdminSidebar from "../AdminSidebar";
+import { adminFetch } from "@/lib/admin-auth";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 const statuses = ["New", "Contacted", "Closed"] as const;
@@ -46,9 +47,7 @@ export default function EnquiriesPage() {
       const query = new URLSearchParams({ page: String(page), limit: "20" });
       if (filter !== "All") query.set("status", filter);
 
-      const response = await fetch(`${apiUrl}/api/admin/enquiries?${query}`, {
-        credentials: "include"
-      });
+      const response = await adminFetch(`${apiUrl}/api/admin/enquiries?${query}`);
 
       if (response.status === 401 || response.status === 403) {
         router.replace("/admin/login");
@@ -75,10 +74,9 @@ export default function EnquiriesPage() {
   }, [statusFilter]);
 
   const updateStatus = async (id: string, status: Status) => {
-    const response = await fetch(`${apiUrl}/api/admin/enquiries/${id}/status`, {
+    const response = await adminFetch(`${apiUrl}/api/admin/enquiries/${id}/status`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      credentials: "include",
       body: JSON.stringify({ status })
     });
 
