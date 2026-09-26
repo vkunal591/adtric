@@ -11,29 +11,34 @@ import { EventCard } from "./EventCard";
 export async function NewsEventsHome() {
   const items = await getLatestPublishedNewsEvents(3);
 
-  if (items.length === 0) return null;
-
   return (
-    <section className="bg-[#E6165C] px-6 py-16 sm:px-10 lg:px-16">
+    <section className="bg-[#ed0b82] px-5 py-16 text-white sm:px-8 lg:py-24">
       <div className="mx-auto max-w-6xl">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h2 className="text-3xl font-bold text-white sm:text-4xl">The Event Diary</h2>
+            <p className="text-sm font-bold uppercase tracking-[0.22em] text-cyan-100">The event diary</p>
+            <h2 className="mt-3 text-4xl font-black uppercase leading-none sm:text-5xl">Latest News &amp; Events</h2>
             <p className="mt-2 text-white/80">Events and celebrations that create joyful moments throughout the year.</p>
           </div>
           <Link
             href="/news-events"
-            className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#E6165C] transition hover:bg-white/90"
+            className="rounded-full border border-white/70 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white hover:text-[#ed0b82]"
           >
             All events &amp; competitions &rarr;
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-          {items.map((item) => (
-            <EventCard key={item.slug} item={item} />
-          ))}
-        </div>
+        {items.length === 0 ? (
+          <p className="mt-8 rounded-2xl border border-white/25 bg-white/10 p-6 text-white/80">
+            New events are coming soon.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {items.slice(0, 3).map((item) => (
+              <EventCard key={item.slug} item={item} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
